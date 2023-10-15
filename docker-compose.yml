@@ -1,0 +1,18 @@
+services:
+    gt7dashboard:
+        image: gt7dashboard
+        build:
+            context: .
+        restart: unless-stopped
+        container_name: gt7dashboard
+        user: "1000"
+        ports:
+            - "5006:5006/tcp"
+            - "33740:33740/udp"
+        volumes:
+            - ./gt7data:/usr/src/app/data
+        environment:
+            - BOKEH_ALLOW_WS_ORIGIN=localhost:5006
+            - BOKEH_RESOURCES=cdn
+            - GT7_PLAYSTATION_IP=192.168.0.177
+            - TZ=Asia/Tokyo
