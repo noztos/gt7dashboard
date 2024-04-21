@@ -395,14 +395,16 @@ def get_last_reference_median_lap(
     if len(laps) > 0:  # Only show last lap
         last_lap = laps[0]
 
-    if len(laps) >= 2 and not reference_lap_selected:
+    #if len(laps) >= 2 and not reference_lap_selected:
+    if len(laps) >= 2:
         reference_lap = get_best_lap(laps)
 
     if len(laps) >= 3:
         median_lap = get_median_lap(laps)
 
     if reference_lap_selected:
-        reference_lap = reference_lap_selected
+        #reference_lap = reference_lap_selected
+        last_lap = reference_lap_selected
 
     return last_lap, reference_lap, median_lap
 

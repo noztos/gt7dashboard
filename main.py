@@ -107,6 +107,7 @@ def update_header_line(div: Div, last_lap: Lap, reference_lap: Lap):
     div.text = f"<p><b>Last Lap: {last_lap.title} ({last_lap.car_name()})<b></p>" \
                f"<p><b>Reference Lap: {reference_lap.title} ({reference_lap.car_name()})<b></p>"
 
+#hoge_top
 def update_lap_change():
     """
     Is called whenever a lap changes.
@@ -142,11 +143,20 @@ def update_lap_change():
     if len(laps) > 0:
 
         last_lap = laps[0]
+        #here!!!!
+        #if g_reference_lap_selected != None:
+        #    last_lap = g_reference_lap_selected
+
 
         if len(laps) > 1:
-            reference_lap = gt7helper.get_last_reference_median_lap(
+            #reference_lap = gt7helper.get_last_reference_median_lap(
+            #    laps, reference_lap_selected=g_reference_lap_selected
+            #)[1]
+            last_reference_median_lap = gt7helper.get_last_reference_median_lap(
                 laps, reference_lap_selected=g_reference_lap_selected
-            )[1]
+            )
+            reference_lap = last_reference_median_lap[1]
+            last_lap = last_reference_median_lap[0]
 
             div_speed_peak_valley_diagram.text = get_speed_peak_and_valley_diagram(last_lap, reference_lap)
 
@@ -156,6 +166,7 @@ def update_lap_change():
 
     start_time = time.time()
     update_time_table(laps)
+    #hoge
     logger.debug("Updating time table took %dms" % ((time.time() - start_time) * 1000))
 
     start_time = time.time()
@@ -272,9 +283,13 @@ def save_button_handler(event):
 def load_laps_handler(attr, old, new):
     logger.info("Loading %s" % new)
     race_diagram.delete_all_additional_laps()
-    app.gt7comm.load_laps(load_laps_from_json(new), replace_other_laps=True)
+    #hoge
+    #app.gt7comm.load_laps(load_laps_from_json(new), to_first_position = True, to_last_position = True, replace_other_laps = True)
+    app.gt7comm.load_laps(load_laps_from_json(new), to_first_position = True, replace_other_laps = True)
+    #logger.info(f"{app.gt7comm}")
 
 
+#here!!!
 def load_reference_lap_handler(attr, old, new):
     global g_reference_lap_selected
     global reference_lap_select
