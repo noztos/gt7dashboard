@@ -1,6 +1,6 @@
 services:
     gt7dashboard:
-        image: gt7dashboard
+        image: gt7dashboard:diff_with_best
         build:
             context: .
         restart: unless-stopped
