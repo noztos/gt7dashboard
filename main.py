@@ -71,7 +71,7 @@ def update_fuel_map(step):
     div_fuel_map.text = gt7diagrams.get_fuel_map_html_table(last_lap)
 
 
-def update_race_lines(laps: List[Lap], reference_lap: Lap):
+def update_race_lines(laps: List[Lap], reference_lap: Lap, focused_lap: Lap = None):
     """
     This function updates the race lines on the second tab with the amount of laps
     that the race line tab can hold
@@ -82,6 +82,11 @@ def update_race_lines(laps: List[Lap], reference_lap: Lap):
     reference_lap_data = reference_lap.get_data_dict()
 
     for i, lap in enumerate(laps[:len(race_lines)]):
+        if focused_lap != None:
+            # override to focused_lap
+            lap = focused_lap
+            # TODO update 'i'
+            # i = laps.index(focused_lap)
         logger.info(f"Updating Race Line for Lap {len(laps) -i} - {lap.title} and reference lap {reference_lap.title}")
 
         race_lines[i].title.text = "Lap %d - %s (%s), Reference Lap: %s (%s)" % (len(laps) - i, lap.title, lap.car_name(), reference_lap.title, reference_lap.car_name())
@@ -139,6 +144,7 @@ def update_lap_change():
     logger.debug("Rerendering laps")
 
     reference_lap = Lap()
+    last_lap = None
 
     if len(laps) > 0:
 
@@ -178,7 +184,7 @@ def update_lap_change():
     logger.debug("Updating speed velocity graph took %dms" % ((time.time() - start_time) * 1000))
 
     start_time = time.time()
-    update_race_lines(laps, reference_lap)
+    update_race_lines(laps, reference_lap, last_lap)
     logger.debug("Updating race lines took %dms" % ((time.time() - start_time) * 1000))
 
     logger.debug("End of updating laps, whole Update took %dms" % ((time.time() - update_start_time) * 1000))
