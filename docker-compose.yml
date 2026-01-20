@@ -14,5 +14,5 @@ services:
         environment:
             - BOKEH_ALLOW_WS_ORIGIN=localhost:5006
             - BOKEH_RESOURCES=cdn
-            - GT7_PLAYSTATION_IP=192.168.0.177
+            - GT7_PLAYSTATION_IP=192.168.XXX.YYY
             - TZ=Asia/Tokyo
